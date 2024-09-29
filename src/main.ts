@@ -1,6 +1,6 @@
 import {fetchData} from './functions';
 import {UpdateResult} from './interfaces/UpdateResult';
-import {UploadResult} from './interfaces/UploadResult';
+// import {UploadResult} from './interfaces/UploadResult';
 import {LoginUser, UpdateUser, User} from './interfaces/User';
 import {apiUrl, uploadUrl} from './variables';
 
@@ -24,9 +24,7 @@ const profileUsernameInput = document.querySelector(
 const profileEmailInput = document.querySelector(
   '#profile-email'
 ) as HTMLInputElement | null;
-const avatarInput = document.querySelector(
-  '#avatar'
-) as HTMLInputElement | null;
+// const avatarInput = document.querySelector('#avatar') as HTMLInputElement | null;
 
 // select profile elements from the DOM
 const usernameTarget = document.querySelector('#username-target') as HTMLSpanElement | null;
@@ -116,7 +114,7 @@ if (loginForm) {
   });
 }
 
-// TODO: profile form event listener
+// profile form event listener
 // event listener should call updateUserData function and update the DOM with
 // the user data by calling addUserDataToDom or checkToken
 if (profileForm) {
