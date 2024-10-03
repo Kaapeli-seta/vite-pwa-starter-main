@@ -24,7 +24,7 @@ const profileUsernameInput = document.querySelector(
 const profileEmailInput = document.querySelector(
   '#profile-email'
 ) as HTMLInputElement | null;
-// const avatarInput = document.querySelector('#avatar') as HTMLInputElement | null;
+
 
 // select profile elements from the DOM
 const usernameTarget = document.querySelector('#username-target') as HTMLSpanElement | null;
@@ -72,7 +72,7 @@ const updateUserData = async (user: UpdateUser, token: string | null): Promise<U
   return result
 };
 
-// TODO: function to add userdata (email, username and avatar image) to the
+// function to add userdata (email, username and avatar image) to the
 // Profile DOM and Edit Profile Form
 const addUserDataToDom = (user: User): void => {
   if (!emailTarget || !usernameTarget || !avatarTarget) {
@@ -84,13 +84,28 @@ const addUserDataToDom = (user: User): void => {
 };
 
 // function to get userdata from API using token
-// const getUserData = async (token: string): Promise<User> => {};
+const getUserData = async (token: string): Promise<User> => {
+  const options: RequestInit = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  return await fetchData<User>(apiUrl + '/users/token', options)
+};
 // NEVER USED
 
 
-// TODO: function to check local storage for token and if it exists fetch
+// function to check local storage for token and if it exists fetch
 // userdata with getUserData then update the DOM with addUserDataToDom
-const checkToken = async (): Promise<void> => {};
+const checkToken = async (): Promise<void> => {
+  const token = localStorage.getItem('token');
+  if(!token) {
+    console.log('no token')
+    return;
+  }
+  const user = await getUserData(token);
+  addUserDataToDom(user);
+};
 
 // call checkToken on page load to check if token exists and update the DOM
 checkToken();
@@ -122,7 +137,10 @@ if (profileForm) {
     try {
       evt.preventDefault();
       const token = localStorage.getItem('token')
-
+      if (!token) {
+        alert('please log in')
+        return
+      }
       if (!profileUsernameInput || !profileEmailInput){
         throw new Error('elementti ei saatavilla')
       }
@@ -137,6 +155,7 @@ if (profileForm) {
       console.log(updateResult)
 
       addUserDataToDom(updateResult.data)
+      alert('update ok')
       } catch (error) {
         console.log((error as Error).message);
       }
