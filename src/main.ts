@@ -11,6 +11,21 @@ const loginForm = document.querySelector('#login-form') as HTMLFormElement | nul
 const profileForm = document.querySelector('#profile-form') as HTMLFormElement | null;
 const avatarForm = document.querySelector('#avatar-form') as HTMLFormElement | null;
 
+// logout button
+const logoutButton = document.querySelector('#logout');
+logoutButton?.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  // if (!emailTarget || !usernameTarget || !avatarTarget) {
+  //   return;
+  // }
+  // emailTarget.innerText = '';
+  // usernameTarget.innerText = '';
+  // avatarTarget.src = '';
+  // tai
+  location.href = './';
+});
+
+
 // select inputs from the DOM
 const usernameInput = document.querySelector(
   '#username'
